@@ -1,0 +1,1 @@
+export { AvailabilityResultPage as default } from "./UserPages";

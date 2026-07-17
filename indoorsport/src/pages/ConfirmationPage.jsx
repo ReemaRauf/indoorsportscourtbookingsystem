@@ -1,0 +1,1 @@
+export { ConfirmationPage as default } from "./UserPages";

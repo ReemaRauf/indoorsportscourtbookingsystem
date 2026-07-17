@@ -1,0 +1,17 @@
+{
+  "name": "finalproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "kill-ports": "npx kill-port 5000 5173 5174 5175 5176 5177",
+    "start": "npm run kill-ports && concurrently \"cd indoorsport-backend && npm run dev\" \"cd indoorsport && npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "kill-port": "^2.0.1"
+  }
+}

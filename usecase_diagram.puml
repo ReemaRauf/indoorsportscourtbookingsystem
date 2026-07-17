@@ -1,0 +1,152 @@
+@startuml Indoorsport_UseCaseDiagram
+
+title Indoorsport – Use Case Diagram
+
+left to right direction
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+
+skinparam usecase {
+  BackgroundColor #F0F4FF
+  BorderColor #4A6FA5
+  FontSize 11
+  ArrowColor #4A6FA5
+}
+
+skinparam actor {
+  FontSize 13
+  BorderColor #333333
+}
+
+actor "User" as U
+actor "Admin" as A
+
+rectangle "Indoorsport System" {
+
+  ' ── Authentication ──────────────────────────────
+  package "Authentication" {
+    usecase "Register Account" as UC1
+    usecase "User Login" as UC2
+    usecase "Admin Login" as UC3
+    usecase "Logout" as UC4
+  }
+
+  ' ── Browsing ────────────────────────────────────
+  package "Browsing & Discovery" {
+    usecase "View Home Page" as UC5
+    usecase "View About Page" as UC6
+    usecase "Browse Courts" as UC7
+    usecase "Browse Coaches" as UC8
+    usecase "Browse Equipment" as UC9
+  }
+
+  ' ── Booking Flow ────────────────────────────────
+  package "Booking Flow" {
+    usecase "Select Court" as UC10
+    usecase "Choose Booking Type\n(Time / Package)" as UC11
+    usecase "Select Date & Time Slot" as UC12
+    usecase "Select Package" as UC13
+    usecase "Check Availability" as UC14
+    usecase "Add Coach (Add-on)" as UC15
+    usecase "Add Equipment (Add-on)" as UC16
+    usecase "Fill Booking Form" as UC17
+    usecase "Make Payment via Stripe" as UC18
+    usecase "Use Wallet Balance" as UC19
+    usecase "Receive Booking\nConfirmation Email" as UC20
+  }
+
+  ' ── User Account ────────────────────────────────
+  package "User Account" {
+    usecase "View My Bookings" as UC21
+    usecase "Cancel Booking" as UC22
+    usecase "View Profile" as UC23
+    usecase "Receive Cancellation\nEmail" as UC24
+    usecase "Receive Rejection\nEmail" as UC25
+  }
+
+  ' ── Admin: Dashboard & Reports ──────────────────
+  package "Admin Dashboard & Reports" {
+    usecase "View Admin Dashboard" as UC26
+    usecase "View Monthly\nRevenue Reports" as UC27
+    usecase "View Booking\nStatistics" as UC28
+  }
+
+  ' ── Admin: Resource Management ──────────────────
+  package "Admin Resource Management" {
+    usecase "Manage Courts\n(Add / Edit / Delete)" as UC29
+    usecase "Manage Coaches\n(Add / Edit / Delete)" as UC30
+    usecase "Manage Equipment\n(Add / Edit / Delete)" as UC31
+    usecase "Manage Packages\n(Add / Edit / Delete)" as UC32
+    usecase "Manage Court\nAvailability" as UC33
+    usecase "Manage Coach Leaves" as UC34
+    usecase "Upload Images" as UC35
+  }
+
+  ' ── Admin: Booking & User Management ────────────
+  package "Admin Booking & User Management" {
+    usecase "Approve Booking" as UC36
+    usecase "Reject Booking\n(with Reason)" as UC37
+    usecase "Cancel Booking\n(with Wallet Refund)" as UC38
+    usecase "Mark Booking as Paid" as UC39
+    usecase "Manage Users" as UC40
+    usecase "Delete User" as UC41
+    usecase "View User\nBooking History" as UC42
+  }
+}
+
+' ═══ User Associations ════════════════════════════
+U --> UC1
+U --> UC2
+U --> UC4
+U --> UC5
+U --> UC6
+U --> UC7
+U --> UC8
+U --> UC9
+U --> UC10
+U --> UC21
+U --> UC22
+U --> UC23
+
+' ═══ Admin Associations ══════════════════════════
+A --> UC3
+A --> UC4
+A --> UC26
+A --> UC27
+A --> UC28
+A --> UC29
+A --> UC30
+A --> UC31
+A --> UC32
+A --> UC33
+A --> UC34
+A --> UC36
+A --> UC37
+A --> UC38
+A --> UC39
+A --> UC40
+A --> UC41
+A --> UC42
+
+' ═══ Include Relationships ═══════════════════════
+UC10 ..> UC11 : <<include>>
+UC11 ..> UC12 : <<include>>
+UC11 ..> UC13 : <<include>>
+UC12 ..> UC14 : <<include>>
+UC13 ..> UC14 : <<include>>
+UC14 ..> UC17 : <<include>>
+UC17 ..> UC18 : <<include>>
+UC18 ..> UC20 : <<include>>
+
+' ═══ Extend Relationships ════════════════════════
+UC15 ..> UC17 : <<extend>>
+UC16 ..> UC17 : <<extend>>
+UC19 ..> UC18 : <<extend>>
+UC22 ..> UC24 : <<include>>
+UC37 ..> UC25 : <<include>>
+UC29 ..> UC35 : <<include>>
+UC30 ..> UC35 : <<include>>
+UC31 ..> UC35 : <<include>>
+UC38 ..> UC24 : <<include>>
+
+@enduml

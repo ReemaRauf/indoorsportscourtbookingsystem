@@ -1,0 +1,1 @@
+export { TimeBookingPage as default } from "./CourtsAndBooking";

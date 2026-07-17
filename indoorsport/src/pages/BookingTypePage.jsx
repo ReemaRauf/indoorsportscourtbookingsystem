@@ -1,0 +1,1 @@
+export { BookingTypePage as default } from "./CourtsAndBooking";

@@ -1,0 +1,192 @@
+Sri Lanka Institute of Advanced Technological Education (SLIATE)
+Advanced Technological Institute-Kurunegala
+Higher National Diploma in Information Technology
+Batch-2324(FT)
+Indoor Sports Court Booking System
+IT4052 | ICT Project (Individual)
+Supervisor
+Ms.K.G.D.De.A Wijesinghe
+M.R. Reema
+KUR/IT/2324/F/0113
+Table of Content
+1. Problem Statement……………………………………………………………………….3
+2. Objectives and Goals…………………………………………………………………….4
+3. Proposed Solution / Approach…………………………………………………………...5
+   3.1. Overview of the Proposed Solution………………………………………………….5
+   3.2. Dual Booking Mechanism……………………………………………………………5
+   3.3. Real-Time Availability Module……………………………………………………....5
+   3.4. Cancellation Management System……………………………………………………5
+   3.5. Admin Control Panel………………………………………………………………….6
+   3.6. Automated Email Notifications……………………………………………………….6
+4. Scope and Limitations…………………………………………………………………….7
+   4.1. Scope of the Project…………………………………………………………………...7
+   4.2. Limitations of the Project……………………………………………………………..7
+5. Methodology……………………………………………………………………………...8
+   5.1. Software Development Approach…………………………………………………….8
+   5.2. System Design………………………………………………………………………...8
+   5.3. Data Collection and Processing……………………………………………………….8
+   5.4. Availability Checking Implementation………………………………………………..8
+   5.5. Booking and Cancellation Flow…………………………………………………….....9
+   5.6. System Implementation…………………………………………………………….…9
+   5.7. Testing and Evaluation……………………………………………………………..…9
+6. Timeline and Milestones…………………………………………………………………10
+7. Resources and Budget……………………………………………………………………11
+   7.1. Resources…………………………………………………………………………….11
+   7.1.1. Hardware Requirements……………………………………………………………11
+   7.1.2. Software Requirements…………………………………………………………….11
+   7.2. Budget………………………………………………………………………………..11
+8. Literature Review………………………………………………………………………...12
+   8.1. Existing Systems and Research……………………………………………………....12
+   8.2. Real-Time Database Technologies in Web Applications………………………….....12
+   8.3. User Experience in Booking Systems……………………………………………...…12
+   8.4. Role-Based Access Control in Web Systems……………………………………...….12
+   8.5. Research Gap………………………………………………………………………….13
+9. References……………………………………………………………………………...…14
+1. Problem Statement
+The current recreational sports and indoor courts facilities in Sri Lanka lack an efficient and transparent booking mechanism. Most venues rely on walk-in customers or informal phone-based reservations, which result in scheduling conflicts, overbooking, and poor customer experience.
+Players and sports enthusiasts face difficulties in checking real-time availability of sports courts and slots for sports courts such as Cricket court, Badminton court, Table Tennis court. Without a centralized system, customers often travel to a venue only to find slots already occupied, resulting in wasted time and frustration.
+Venue administrators also face operational challenges including manual record-keeping, difficulty in managing multiple bookings across different game types, and an inability to track revenue or analyse booking trends over time.
+Furthermore, the absence of a structured cancellation and refund process creates disputes between players and venue management. There is a clear need for a digital, real-time indoor sports court booking platform that provides convenience to customers while improving operational efficiency for venue administrators.
+2. Objectives and Goals
+Primary Objective: To develop a web-based Indoor Sports Court Booking System using React and Firebase that enables customers to book, manage, and cancel game slots in real time, while providing administrators with full management capabilities.
+Specific Objectives:
+To design and develop a user-friendly platform that allows customers to browse available courts, check real-time slot availability, and complete bookings online.
+To implement a dual booking mechanism supporting both Time-Based Booking (custom start and end time) and Package-Based Booking (predefined 2-hour, 3-hour, and 4-hour packages).
+To develop a real-time availability checking system that prevents double bookings and reflects accurate slot status immediately after each confirmed booking.
+To implement a cancellation management system that allows customers to cancel bookings prior to the scheduled start time.
+To build a comprehensive admin panel that enables venue administrators to manage courts, packages, availability time slots, and bookings.
+To provide an automated email confirmation system that notifies when the admin confirms a booking ,a confirmation email should be sent to the user
+To ensure transparency in the booking process by displaying accurate pricing, booking details, and slot availability at all times.
+3. Proposed Solution / Approach
+3.1. Overview of the Proposed Solution
+This project proposes the development of an Indoor Sports Court Booking System as a web-based platform built using React (frontend) and Firebase (backend and database). The system enables customers to select a game, choose a booking type, verify slot availability, and confirm their reservation — all within a streamlined, multi-step booking flow.
+The platform supports two distinct user roles: Customers (general users) and Administrators (venue managers). Each role has a dedicated interface tailored to their respective needs, ensuring a clean and focused user experience.
+3.2. Dual Booking Mechanism
+The system incorporates two booking models to cater to different customer preferences:
+Time-Based Booking: Customers select a specific start time and end time for their session. The system calculates the duration and total price dynamically based on the per-hour rate configured by the admin.
+Package-Based Booking: Customers select from predefined packages The end time is automatically calculated from the start time and package duration.
+3.3. Real-Time Availability Module
+Firebase Firestore is used to store and manage slot data in real time. When a customer submits a date, time, and game selection, the system queries Firestore to detect any overlapping confirmed bookings. The availability result is immediately presented as either SLOT AVAILABLE or SLOT NOT AVAILABLE, with options to proceed or modify the selection. Cancelled slots are automatically released and become available for future bookings.
+3.4. Cancellation Management System
+Customers may cancel confirmed upcoming bookings from the My Bookings dashboard. The system enforces a policy that restricts cancellations to bookings where the start time has not yet passed. Upon successful cancellation, the booking status is updated in Firestore and the slot is released for others to book. Administrators also retain the authority to cancel any booking from the Admin Bookings Management panel.
+3.5. Admin Control Panel
+A dedicated admin interface provides full control over the system. Administrators can manage the following:
+Courts Management: Add, edit, activate, or deactivate games listed on the platform.
+Packages Management: Define and update pricing packages available to customers.
+Availability Management: Set hourly time slot availability per game per date, with toggle controls to block or open individual slots.
+Bookings Management: View all bookings with filtering options, cancel bookings if required, and monitor booking statuses.
+3.6. Automated Email Notifications
+Upon successful booking the system automatically dispatches email notifications to the customer's registered email address. These emails include full booking details such as Booking ID, game type, date, time, and total amount. This is implemented using EmailJS or Firebase Cloud Functions integrated with a mail delivery service.
+4. Scope and Limitations
+4.1. Scope of the Project
+The proposed system focuses on developing a web-based Indoor Sports Caourt Booking System that facilitates direct bookings between customers and venue administrators.
+The scope of the system includes the following functionalities:
+Customer registration, login via Firebase Authentication
+Courts browsing with real-time availability checking
+Dual booking flow: Time-Based Booking and Package-Based Booking
+Multi-step booking process: Court Selection → Booking Type → Date/Time/Package → Availability Check → Booking Form 
+My Bookings dashboard for customers to view and cancel their bookings
+Automated email confirmation is sent when the booking is confirmed by the admin
+Admin panel with full CRUD capabilities for Sports court, Packages, Availability, and Bookings
+Revenue and booking details with visual charts for administrators
+Responsive web interface designed using React 
+4.2. Limitations of the Project
+The system is limited to web-based access; a dedicated mobile application is not included in the current implementation
+Online payment gateway integration is not included in the current scope; payments are assumed to be handled at the venue
+The availability system operates on an hourly slot basis; sub-hourly booking granularity is not supported
+Advanced machine learning-based demand forecasting and pricing optimization are not implemented
+External factors such as venue maintenance schedules require manual admin input and are not automated
+The system does not currently support multi-venue or multi-branch management
+5. Methodology
+5.1. Software Development Approach
+This project adopts the Agile Software Development Life Cycle (SDLC) methodology, enabling iterative development and continuous refinement of features. Development is organized into sprints, with each sprint delivering a functional module of the system. This approach allows for regular testing and adjustments based on evaluation feedback throughout the development process.
+Initially, requirements are gathered by analyzing the problems in the current recreational facility booking environment. Based on these requirements, the system architecture and features are designed to meet user needs.
+5.2. System Design
+Frontend Layer – Provides user interfaces for customers and administrators to interact with the system.
+Backend Layer – Handles business logic such as availability checking, booking validation, and cancellation management.
+Database Layer – Stores user information, court listings, package configurations, booking records, and activity data required for system operations and analysis.
+5.3. Data Collection and Processing
+The system collects data from user activities, including:
+Booking submissions and confirmations
+Court and slot views and searches
+Cancellation requests and timestamps
+Admin configuration changes for availability and packages
+This data is processed to generate insights such as booking trends and user behavior patterns.
+5.4. Availability Checking Implementation
+Real-time availability is implemented by querying the Firestore bookings collection for records that match the selected game, date, and overlap the requested time window with a status of Confirmed. If any overlapping booking exists, the slot is marked as unavailable. Admin-blocked slots set via the Availability Management panel are also excluded, providing a comprehensive conflict prevention mechanism.
+5.5. Booking and Cancellation Flow
+The booking flow is structured as a multi-step process guided by React Router and state management. Upon form submission, a booking document is created in Firestore with a Confirmed status, and an email confirmation is dispatched via EmailJS. Cancellations update the booking status to Cancelled in Firestore, immediately releasing the slot for future bookings.
+5.6. System Implementation
+The system is implemented using web technologies:
+Frontend Framework: React (for building the user interface)
+Backend:Node.js & Database: Firebase (Firestore for real-time database, Firebase Authentication for user management)
+Development Tool: Visual Studio Code
+Web Browser: Google Chrome
+Version Control: Git & GitHub
+5.7. Testing and Evaluation
+The system is tested to ensure:
+Functional correctness
+User interface usability
+Data accuracy
+6. Timeline and Milestones
+7. Resources and Budget
+7.1. Resources
+The development of the proposed Indoor Sports Court Booking System requires both hardware and software resources.
+7.1.1. Hardware Requirements
+Personal Computer or Laptop (for development and testing)
+Smartphone (for testing responsiveness and cross-browser compatibility)
+Internet Connection (for development, Firebase access, and deployment)
+7.1.2. Software Requirements
+Frontend Framework: React (for building the user interface)
+Backend:Node.js & Database: Firebase (Firestore for real-time database, Firebase Authentication for user management)
+Development Tool: Visual Studio Code
+Web Browser: Google Chrome
+Version Control: Git & GitHub
+7.2. Budget
+Item Description
+Details
+Estimated Cost (LKR)
+Development Tools
+VS Code (free), React (open-source)
+0
+Firebase Platform
+Spark Plan (free tier)
+0
+Node.js / npm
+Open-source runtime
+0
+Bootstrap / Chart.js
+Open-source libraries
+0
+EmailJS
+Free tier (200 emails/month)
+0
+Hardware Usage
+Laptop/Desktop (existing resource)
+0
+Miscellaneous
+Printing, binding, documentation
+2,000
+Total Estimated Cost
+2,000 LKR
+8. Literature Review
+8.1. Existing Systems and Research
+Existing recreational facility booking systems worldwide have demonstrated the value of digital platforms in improving operational efficiency and customer experience. Online booking systems in sports venues and recreational centers have been shown to reduce administrative overhead, minimize scheduling conflicts, and increase customer satisfaction 
+However, most existing systems in Sri Lanka are either paper-based or rely on informal phone reservations. Research into local sports facility management highlights a significant gap in the adoption of digital booking technologies, particularly for small-to-medium indoor sports court that lack the resources to implement enterprise-level solutions.
+8.2. Real-Time Database Technologies in Web Applications
+Firebase Firestore has been widely adopted in modern web applications for its real-time synchronization capabilities and scalable data model. Studies in software engineering demonstrate that Firestore is well-suited for applications requiring high-frequency read/write operations, such as real-time availability checking in booking systems. React.js, combined with Firebase, has emerged as a popular technology stack for building scalable single-page applications with dynamic data requirements.
+8.3. User Experience in Booking Systems
+Research in human-computer interaction emphasizes the importance of simplified, multi-step booking flows in reducing user abandonment rates in online reservation systems. The proposed system adopts a guided multi-step flow (Court Selection → Booking Type → Date/Time → Availability Check → Form → Confirmation) consistent with these findings.
+8.4. Role-Based Access Control in Web Systems
+Role-based access control is a well-established security model used in web applications to restrict system access based on user roles. Implementation of RBAC in Firebase using custom claims and Firestore security rules has been documented as an effective approach for separating customer and administrator functionalities within a single application. This project adopts Firebase Authentication with role-based routing in React to enforce appropriate access boundaries.
+8.5. Research Gap
+Despite the growing availability of general-purpose booking platforms, there is a lack of tailored, open-source solutions specifically designed for small indoor recreational venues in Sri Lanka. Existing systems do not adequately address the specific requirements of multi-sports indoor court, including per-court hourly pricing, package-based booking options, admin-controlled slot blocking, and integrated cancellation management within a single cost-effective platform. This project addresses these gaps directly.
+9. References
+Firebase Documentation (2025). Cloud Firestore. Available at: https://firebase.google.com/docs/firestore [Accessed: 27 April 2026].
+React Documentation (2025). React — A JavaScript library for building user interfaces. Available at: https://react.dev [Accessed: 27 April 2026].
+Bootstrap Team (2025). Bootstrap Documentation. Available at: https://getbootstrap.com [Accessed: 22 April 2026].
+EmailJS (2025). EmailJS Documentation. Available at: https://www.emailjs.com/docs [Accessed: 27 April 2026].
+Chart.js (2025). Chart.js Documentation. Available at: https://www.chartjs.org/docs [Accessed: 22 April 2026].
+Nielsen Norman Group (2022). Multi-Step Forms Reduce User Errors. Available at: https://www.nngroup.com [Accessed: 27 April 2026].
+Wijerathna, D. and Perera, S., 2021. Adoption of digital technologies in Sri Lanka: Challenges and opportunities. Sri Lanka Journal of Information Technology, 13(2), pp.45-58.
+Google LLC (2025). Firebase Authentication Documentation. Available at: https://firebase.google.com/docs/auth [Accessed: 27 April 2026].

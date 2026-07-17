@@ -1,0 +1,1 @@
+export { BookingFormPage as default } from "./UserPages";

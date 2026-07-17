@@ -1,0 +1,311 @@
+Sri Lanka Institute of Advanced Technological Education (SLIATE)
+Advanced Technological Institute – Kurunegala
+Higher National Diploma in Information Technology
+Batch-2324(FT)
+Indoor Sports Courts Booking 
+Web Based System
+Project Report
+IT4052 | ICT Project
+Supervisor
+Ms. P.G.R.N.J Gamlath
+M.R.Reema – KUR/IT/2324/F/0113
+Table of Contents
+Acknowledgement4
+Abstract5
+Table of Contents7
+Table of Figures9
+Chapter 1: Introduction11
+1.1 Purpose11
+1.2 System Overview11
+1.3 Problem Statement11
+1.4 Goals and Vision12
+Chapter 2: Requirement Specification13
+2.1 Requirement Gathering Process13
+2.2 System Functions13
+2.3 Software Requirement14
+2.4 Hardware Requirement15
+Chapter 3: Design16
+3.1 Front-End Design16
+3.1.1 Module 1 – Authentication16
+3.1.2 Module 2 – Public Module (Home & About)17
+3.1.3 Module 3 – Court Browsing & Booking Flow17
+3.1.4 Module 4 – Coach & Equipment Add-ons19
+3.1.5 Module 5 – Payment & Confirmation19
+3.1.6 Module 6 – User Account Management20
+3.1.7 Module 7 – Admin Dashboard & Reports21
+3.1.8 Module 8 – Admin Resource Management21
+3.1.9 Module 9 – Admin Booking & User Management23
+3.2 Database Design24
+3.3 Architectural Design25
+3.4 Use Case Diagram26
+References28
+Table of Figures
+Figure 3.1 – Registration Page
+Figure 3.2 – User Login Page
+Figure 3.3 – Admin Login Page
+Figure 3.4 – Home Page
+Figure 3.5 – About Page
+Figure 3.6 – Courts Page
+Figure 3.7 – Booking Type Selection
+Figure 3.8 – Time Booking Page
+Figure 3.9 – Package Booking Page
+Figure 3.10 – Availability Result Page
+Figure 3.11 – Coach Selection Page
+Figure 3.12 – Equipment Selection Page
+Figure 3.13 – Booking Form & Stripe Checkout
+Figure 3.14 – Booking Confirmation Page
+Figure 3.15 – My Bookings Page
+Figure 3.16 – Profile Page
+Figure 3.17 – Coaches Page (Public View)
+Figure 3.18 – Equipment Page (Public View)
+Figure 3.19 – Admin Dashboard
+Figure 3.20 – Admin Reports
+Figure 3.21 – Manage Courts
+Figure 3.22 – Manage Packages
+Figure 3.23 – Manage Coaches
+Figure 3.24 – Manage Coach Leaves
+Figure 3.25 – Manage Equipment
+Figure 3.26 – Manage Availability
+Figure 3.27 – Manage Bookings
+Figure 3.28 – Manage Payments
+Figure 3.29 – Manage Users
+Figure 3.30 – Entity Relationship Diagram (ERD)
+Figure 3.31 – System Architecture Diagram
+Figure 3.32 – Use Case Diagram
+Acknowledgement
+I'm sincerely grateful to my supervisor, Ms. P.G.R.N.J. Gamlath, for her guidance and patience throughout this project. Her feedback at every milestone review pushed Indoor sports courts from a rough idea into something I could actually demonstrate and document properly.
+I'd also like to thank the Advanced Technological Institute – Kurunegala and SLIATE for the academic environment and resources that made this IT4052 project possible in the first place.
+Thanks as well to my HNDIT batchmates in Batch 2324(FT) – the technical discussions with them got me past more than a few implementation dead ends.
+And finally, thank you to my family and friends for putting up with me through this whole process.
+Abstract
+Managing sports complexes often involves manual booking processes, disjointed coach scheduling, fragmented equipment rental, and no clear way for customers to check real-time availability or pay securely online. Facility operators rely on phone calls, spreadsheets, and ledgers to manage court allocations, which leads to double bookings, scheduling conflicts, and revenue leakage. The booking systems that already exist only solve pieces of this: some handle court reservations but ignore coaching, others manage payments but lack inventory tracking, and none of them bring together court scheduling, coach availability, equipment rental, membership packages, and secure online payments in one place.
+Indoorsport is a React and Node.js web application built to close that gap, giving sports complex operators a single platform to manage every aspect of their facility while letting players self-serve their bookings. It supports two roles – User and Admin – each routed to its own interface after sign-in. Users can browse available courts, view coach profiles, rent equipment, and book time-based or package-based sessions, with a real-time availability engine that prevents scheduling conflicts before they happen. Every booking flows through a Stripe-powered checkout for secure advance payments, and automated email confirmations are dispatched via Nodemailer at every stage of the booking lifecycle – confirmation, cancellation, and rejection.
+The admin side provides a full management dashboard covering court and coach CRUD operations, manage equipment , package management, booking approval workflows with approve/cancel actions, user management with wallet balance tracking, coach leave management, payment oversight, and a comprehensive analytics and reporting module with monthly revenue breakdowns. Development followed a component-driven approach: the React frontend was built with Vite for fast development iteration, styled with Tailwind CSS for a fully responsive layout, and connected to a Node.js/Express REST API backed by Cloud Firestore for scalable, real-time data storage.
+This report covers the requirement specification, system design, database structure, and architecture of Indoorsport as built, and demonstrates that a well-designed web platform can meaningfully streamline sports complex operations and improve the booking experience for both operators and players.
+Chapter 1: Introduction
+1.1 Purpose
+This report sets out the requirement specification, system design, and architecture of Indoor sport courts booking web based system, a comprehensive sports court complex booking and management platform built as the IT4052 ICT Project. It is meant to give the supervisor and other assessors a clear picture of why the system exists, what it actually does, how it was designed, and which technologies were used to build it.
+1.2 System Overview
+Indoor sport courts booking web based system is built with React (Vite) on the front end and Node.js/Express on the back end. It connects users in real time: players who need to book courts, hire coaches, or rent equipment, and admins who oversee the entire platform. Users can browse available courts, coaches, equipment, and packages, and make secure payments via Stripe. Development followed a component-driven strategy, utilizing Tailwind CSS for styling and Firebase Firestore for a scalable, real-time database architecture.
+Each of the two access levels – User and Admin – gets routed to its own interface after sign-in. Users land on a clean, modern homepage with quick access to courts, coaches, equipment, and their profile. Admins get a full-featured sidebar-based dashboard with access to resource management, booking oversight, financial reports, and user administration. The authentication system uses bcrypt for password hashing and JWT for stateless session management, with separate login portals for users and administrators.
+1.3 Problem Statement
+Sports complexes deal with overlapping bookings, coach scheduling conflicts, and resource management on a daily basis. Without a centralized system, administrators end up managing this manually through phone calls and ledgers, which slows everything down and leads to errors. Customers don't know whether a court is available until they call, coaches' leave schedules aren't visible to anyone making a booking, and equipment inventory is tracked, if at all, on paper.
+Existing apps sometimes solve pieces of the puzzle, but few bring together court bookings, coach availability, equipment inventory, membership packages, wallet-based payments, and secure online payment processing into a single, unified workflow. The lack of automated email notifications means customers often don't know whether their booking was confirmed, cancelled, or rejected until they call the facility directly.
+1.4 Goals and Vision
+Indoor sports court’s main goal is to provide a robust web application that automates sports complex management and empowers players to self-serve their bookings. More specifically, the project aims to:
+Provide a real-time booking engine for courts and coaches with conflict prevention through an availability checking system.
+Integrate secure, reliable payment processing using Stripe, with support for advance payments and wallet-based balance management.
+Manage equipment inventory and membership packages effectively, with admin CRUD operations for all resource types.
+Offer an administrative dashboard with comprehensive reporting and analytics, including monthly revenue breakdowns, booking statistics, and coach/equipment utilisation metrics.
+Ensure a highly responsive, fast, and user-friendly interface that works across mobile and desktop devices.
+Automate the booking lifecycle with email notifications for confirmations and cancellations via Nodemailer.
+The broader aim is to show that a well-designed, modern web platform can genuinely streamline the operations of a sports court complex, reduce manual coordination overhead, and deliver a premium booking experience for both facility operators and their customers.
+Chapter 2: Requirement Specification
+2.1 Requirement Gathering Process
+Indoor sports court’s requirements came from a mix of secondary research and analysis of common pain points in sports facility management. The core coordination gaps identified were the lack of unified availability checking (preventing double bookings), the absence of integrated payment processing, and the missing link between coaching schedules and court reservations.
+Functional and non-functional requirements were structured to handle multiple resource types: spaces (courts), people (coaches), items (equipment), and plans (packages). The Firestore data model, API routes, and screen flows for each user role were designed upfront, following a modular approach so new features could be added without reworking the existing architecture.
+A number of requirements were refined during development. The booking flow was expanded to support both time-based and package-based bookings. Coach availability was separated into its own module to handle leave management independently. A wallet system was introduced to allow refunds and credit-based payments. And the email notification system was designed with professionally styled HTML templates covering every booking state change.
+2.2 System Functions
+The core functions of the Indoorsport platform are grouped by module as follows:
+Module
+Key Functions
+Authentication
+User registration with email/phone, login with bcrypt password hashing, JWT-based session management, role-based routing (Admin/User), separate admin login portal.
+Resource Management
+Admin tools to dynamically add, edit, or remove courts (with image upload), coaches (with specialization and pricing), equipment (with image upload), and packages (with court assignment and duration).
+Availability Engine
+Real-time tracking of court schedules by date and time slot, coach availability management, coach leave tracking, conflict prevention before booking confirmation.
+Booking & Payment
+End-to-end booking flow supporting time-based and package-based bookings, coach and equipment add-ons, Stripe checkout integration for advance payments, wallet balance deduction, automated email confirmations.
+Admin Booking Workflow
+cancellation (with reason and wallet refund), payment status tracking, mark-as-paid functionality.
+Dashboard & Reports
+Admin analytics dashboard with booking statistics, monthly revenue reports, booking trend charts, coach utilisation metrics, equipment rental tracking, cancelled/rejected booking analysis.
+User Management
+Admin view of all registered users, booking history per user, wallet balance tracking, user deletion, profile management for end users.
+Email Notifications
+Automated, professionally styled HTML email notifications for booking confirmations and cancellations ,dispatched via Nodemailer with Gmail SMTP transport.
+2.3 Software Requirement
+Category
+Tools / Technologies
+Frontend Framework
+React 19 (via Vite 8)
+Styling
+Tailwind CSS 4, PostCSS, Autoprefixer
+Backend Framework
+Node.js, Express.js 4
+Database & Services
+Cloud Firestore (Firebase Admin SDK 12)
+Payment Gateway
+Stripe API (stripe-js, react-stripe-js)
+Email Services
+Nodemailer 6 (Gmail SMTP)
+Security & Auth
+bcryptjs (password hashing), jsonwebtoken (JWT session tokens)
+File Upload
+Multer 2 (image upload for courts, coaches, equipment)
+HTTP Client
+Axios (frontend API communication)
+UI Icons
+React Icons 5
+Development Tools
+Nodemon (backend hot reload), ESLint (code quality)
+Version Control
+GitHub
+IDE / Editor
+Visual Studio Code
+2.4 Hardware Requirement
+Development machine: Any standard laptop or desktop that can run Node.js – 8 GB RAM minimum, plus enough storage for the Node.js runtime, npm packages, and development tooling.
+End-user device: Any modern web browser on a smartphone, tablet, or desktop computer with an active internet connection. The responsive design ensures full functionality across all screen sizes.
+Chapter 3: Design
+3.1 Front-End Design
+The interface is built in React and organized around the two user roles, each with its own screens managed through a state-based page navigation system. Regular users land directly on a clean, modern homepage where they can view available sports facilities, browse coaches and equipment, and initiate bookings. The booking interface is built around a simple selection flow: pick a court, choose between time-based or package-based booking, select an available time slot, optionally add a coach and equipment, and proceed to a secure Stripe checkout. Admins get a sidebar-based dashboard with specialized screens to manage inventory, track bookings, or cancel  reservations, and view financial reports.
+Every screen follows a consistent design system powered by Tailwind CSS, ensuring a fully responsive layout across mobile and desktop devices. The UI uses a dark theme with vibrant accent colors, glassmorphism effects, smooth gradient backgrounds, and micro-animations for hover states and transitions. Components were built modularly – Navbar, Footer, AdminSidebar, StripeCheckout, and CallToAction – to ensure consistency and reusability across the application.
+3.1.1 Module 1 – Authentication
+Figure 3.1 – Registration Page
+Caption:
+Allows new users to create an account by providing their name, email, phone number, and password. Includes form validation and success feedback before redirecting to login.
+Figure 3.2 – User Login Page
+Caption:
+Authenticates users with email and password credentials. On success, stores the JWT token and user data in localStorage and routes the user to the homepage.
+Figure 3.3 – Admin Login Page
+Caption:
+A separate, dedicated login portal for administrators with a distinct visual design. Authenticates admin credentials and routes to the admin dashboard on success.
+3.1.2 Module 2 – Public Module (Home & About)
+Figure 3.4 – Home Page
+Caption:
+The main landing page featuring a hero section with a call-to-action, featured courts section, facility highlights, and quick navigation to booking, coaches, and equipment pages.
+Figure 3.5 – About Page
+Caption:
+Provides information about the sports complex, its mission, facilities, and team. Includes sections on the complex's history, available amenities, and contact details.
+3.1.3 Module 3 – Court Browsing & Booking Flow
+Figure 3.6 – Courts Page
+Caption:
+Displays all available courts with images, pricing, and descriptions. Each court card features a "Book Now" button that initiates the booking flow.
+Figure 3.7 – Booking Type Selection
+Caption:
+Allows the user to choose between a time-based booking (selecting specific start and end times) or a package-based booking (choosing from predefined membership packages).
+Figure 3.8 – Time Booking Page
+Caption:
+Lets the user select a date, start time, and end time for their court reservation. Submits an availability check before proceeding.
+Figure 3.9 – Package Booking Page
+Caption:
+Displays available membership packages for the selected court, including duration, included sessions, and pricing. Allows selection and time slot confirmation.
+Figure 3.10 – Availability Result Page
+Caption:
+Shows whether the selected court and time slot is available or already booked. If available, the user can proceed to add coaches, equipment, and complete the booking.
+3.1.4 Module 4 – Coach & Equipment Add-ons
+Figure 3.11 – Coach Selection Page
+Caption:
+Displays available coaches with their specializations, experience, hourly rates, and availability status. Users can select a coach to add to their booking.
+Figure 3.12 – Equipment Selection Page
+Caption:
+Shows available equipment for rental with descriptions, prices, and stock levels. Users can select multiple items and quantities to add to their booking.
+3.1.5 Module 5 – Payment & Confirmation
+Figure 3.13 – Booking Form & Stripe Checkout
+Caption:
+Collects final booking details and displays a comprehensive booking summary including court, time, coach, equipment, and total price. Integrates Stripe Elements for secure credit card payment processing with advance payment options.
+Figure 3.14 – Booking Confirmation Page
+Caption:
+Displays a confirmation receipt after successful booking, including booking ID, court details, date, time, selected add-ons, and payment status. An automated confirmation email is also dispatched to the user.
+3.1.6 Module 6 – User Account Management
+Figure 3.15 – My Bookings Page
+Caption:
+Lists all bookings made by the logged-in user with status indicators (Confirmed, Cancelled,). 
+Figure 3.16 – Profile Page
+Caption:
+Displays the user's profile information including name, email, phone number, and wallet balance. Allows users to view their account details 
+Figure 3.17 – Coaches Page (Public View)
+Caption:
+A public-facing page displaying all coaches with their photos, specializations, experience levels, and hourly rates, allowing users to browse coaching options before booking.
+Figure 3.18 – Equipment Page (Public View)
+Caption:
+A public-facing page displaying all available equipment with images, descriptions, rental prices, and current stock availability.
+3.1.7 Module 7 – Admin Dashboard & Reports
+Figure 3.19 – Admin Dashboard
+Caption:
+Provides administrators with an overview of platform statistics including total bookings, revenue summaries, and recent booking activity with quick-action cards.
+Figure 3.20 – Admin Reports
+Caption:
+Displays analytical charts and performance statistics including monthly revenue trends, booking volume analysis, coach utilisation rates, equipment rental frequency, and cancellation/rejection analytics with interactive chart visualizations.
+3.1.8 Module 8 – Admin Resource Management
+Figure 3.21 – Manage Courts
+Caption:
+Allows administrators to add new courts with images, edit existing court details (name, description, hourly rate), and delete courts. Includes image upload functionality via Multer.
+Figure 3.22 – Manage Packages
+Caption:
+Enables administrators to create, edit, and delete membership packages with configurable court assignment, duration, included sessions, and pricing.
+Figure 3.23 – Manage Coaches
+Caption:
+Allows administrators to add coaches with profile photos, specializations, experience details, and hourly rates. Supports full CRUD operations on coach profiles.
+Figure 3.24 – Manage Coach Leaves
+Caption:
+Provides administrators with the ability to manage coach leave schedules, mark coaches as unavailable for specific dates, and track leave history.
+Figure 3.25 – Manage Equipment
+Caption:
+Enables administrators to manage the equipment inventory including adding new items with images, updating stock levels, editing rental prices, and removing discontinued items.
+Figure 3.26 – Manage Availability
+Caption:
+Allows administrators to view and manage court availability by date, view booked time slots, and manually block or release time slots as needed.
+3.1.9 Module 9 – Admin Booking & User Management
+Figure 3.27 – Manage Bookings
+Caption:
+Displays all bookings across the platform with filtering and search capabilities.  Admin cancelled bookings , user cancelled and confirmed bookings 
+Figure 3.28 – Manage Payments
+Caption:
+Shows payment status for all bookings including advance payments, wallet deductions, and outstanding balances. Allows administrators to mark bookings as fully paid.
+Figure 3.29 – Manage Users
+Caption:
+Lists all registered users with their booking history, wallet balances, and account details. Administrators can view detailed user profiles and delete user accounts when necessary.
+3.2 Database Design
+Indoorsport's primary data store is Cloud Firestore, a document-oriented NoSQL database. While Firestore doesn't enforce a relational schema, the platform's collections were designed with clear logical relationships in mind, which is why they can be mapped onto an Entity Relationship Diagram (ERD) – shown in Figure 3.30. The main collections are Users, Courts, Coaches, Equipments, Packages, Bookings, Availability, and Coach Availability.
+A registered user can have many bookings, and each booking references exactly one court and optionally one coach and multiple equipment items. The Users collection stores profiles with name, email, phone, hashed password, role (user/admin), wallet balance, and creation timestamp, each identified by a sequential ID (e.g., us01, us02). Courts contain name, description, hourly rate, and image URL. Coaches store name, specialization, experience, hourly rate, availability status, and profile image. Equipments track name, description, rental price, stock quantity, and image.
+The Bookings collection is the core transactional collection, linking users to courts, coaches, equipment, time slots, and payment statuses. Each booking document records the court name, date, time range, booking type (Time/Package), selected package, coach, equipment list, price, advance paid, payment status, booking status (Pending/Confirmed/Cancelled/Rejected), wallet usage, cancellation/rejection reason, and timestamps. The Availability collection tracks court schedules by date and time slot to prevent double bookings at the API level. The Coach Availability collection separately tracks coach leave dates, ensuring coaches cannot be booked during their leave periods.
+Figure 3.30: Entity Relationship Diagram (ERD)
+[Diagram placeholder – insert ERD diagram here]
+3.3 Architectural Design
+Indoorsport's architecture is layered, as shown in Figure 3.31. The presentation layer is a React Single Page Application (SPA) built with Vite, providing a fast, interactive user experience. The UI is organized into modular components (Navbar, Footer, AdminSidebar, StripeCheckout) and page-level screens, with state managed through React hooks (useState, useEffect). Navigation between pages is handled through a centralized state-based routing system in App.jsx, with role-based access control routing users and admins to their respective interfaces.
+Below the presentation layer is the API layer: an Express.js REST API running on Node.js that handles all business logic. The API is organized into twelve route modules – auth, courts, packages, bookings, availability, coachAvailability, coaches, equipments, payment, reports, users, and upload – each handling CRUD operations and business rules for their respective domain. JWT-based middleware secures all protected endpoints, and role checks within route handlers enforce admin-only access where needed.
+On the data side: Firebase Cloud Firestore handles structured data storage with real-time capabilities. The Firebase Admin SDK connects the backend to Firestore, providing server-side access to all collections. Multer handles file uploads for court, coach, and equipment images, serving them as static files from the server.
+Stripe handles secure financial transactions through the PaymentIntents API. The backend creates payment intents with the booking amount, and the frontend uses Stripe Elements (via @stripe/react-stripe-js) to collect card details securely, ensuring PCI compliance without sensitive card data touching the application server. Nodemailer dispatches automated HTML email notifications through a Gmail SMTP transport, with professionally styled templates for booking confirmations, cancellations (with wallet refund details), and rejections (with admin-provided reasons).
+Figure 3.31: System Architecture Diagram
+[Diagram placeholder – insert System Architecture Diagram here]
+3.4 Use Case Diagram
+The Indoorsport system supports two primary actors:
+User Actor:
+Register and log in to the platform
+Browse courts, coaches, and equipment
+Check court availability for specific dates and times
+Book courts with time-based or package-based options
+Add coaches and equipment as booking add-ons
+Make secure payments via Stripe
+View booking history and manage active bookings
+Cancel pending bookings
+Receive email notifications for booking status changes
+View and manage user profile
+Use wallet balance for payments
+Admin Actor:
+Log in via the dedicated admin portal
+View dashboard with platform statistics and analytics
+Manage courts (add, edit, delete with image upload)
+Manage coaches (add, edit, delete, track leaves)
+Manage equipment inventory (add, edit, delete, track stock)
+Manage membership packages (add, edit, delete)
+Manage court availability and time slots
+cancel bookings with reasons
+Mark bookings as paid
+Manage registered users and wallet balances
+View comprehensive monthly reports and analytics
+Figure 3.32: Use Case Diagram
+[Diagram placeholder – insert Use Case Diagram here]
+References
+React Documentation. (2024). React – The library for web and native user interfaces. https://react.dev/
+Node.js & Express Documentation. (2024). Express – Fast, unopinionated, minimalist web framework for Node.js. https://expressjs.com/
+Google LLC. (2024). Cloud Firestore documentation. Firebase. https://firebase.google.com/docs/firestore
+Stripe API Reference. (2024). Stripe API Documentation. https://stripe.com/docs/api
+Stripe.js & React Stripe.js Documentation. (2024). Stripe Elements for React. https://stripe.com/docs/stripe-js/react
+Nodemailer Documentation. (2024). Nodemailer – Send emails from Node.js. https://nodemailer.com/
+Vite Documentation. (2024). Vite – Next Generation Frontend Tooling. https://vitejs.dev/
+Tailwind CSS Documentation. (2024). Tailwind CSS – Rapidly build modern websites without ever leaving your HTML. https://tailwindcss.com/docs
+JSON Web Tokens. (2024). Introduction to JSON Web Tokens. https://jwt.io/introduction
+bcrypt.js Documentation. (2024). bcrypt.js – Optimized bcrypt in JavaScript. https://github.com/dcodeIO/bcrypt.js

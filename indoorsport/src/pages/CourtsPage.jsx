@@ -1,0 +1,1 @@
+export { CourtsPage as default } from "./CourtsAndBooking";

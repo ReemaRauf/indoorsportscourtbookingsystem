@@ -1,0 +1,127 @@
+@startuml
+!theme plain
+skinparam linetype ortho
+
+entity "users" as Users {
+  * id : string [PK]
+  --
+  name : string
+  email : string
+  phone : string
+  password : string
+  role : string
+  walletBalance : number
+  createdAt : string
+}
+
+entity "bookings" as Bookings {
+  * id : string [PK]
+  --
+  userId : string [FK]
+  user : string
+  phone : string
+  court : string
+  date : string
+  time : string
+  type : string
+  price : number
+  package : string
+  coach : string
+  equipments : array
+  advancePaid : number
+  paymentStatus : string
+  status : string
+  paymentIntentId : string
+  useWallet : boolean
+  walletAmountUsed : number
+  createdAt : string
+}
+
+entity "payments" as Payments {
+  * id : string [PK]
+  --
+  bookingId : string [FK]
+  userId : string [FK]
+  user : string
+  phone : string
+  court : string
+  date : string
+  time : string
+  type : string
+  totalAmount : number
+  advancePaid : number
+  balanceDue : number
+  paymentStatus : string
+  bookingStatus : string
+  paymentIntentId : string
+  walletAmountUsed : number
+  useWallet : boolean
+  refunded : boolean
+  refundStatus : string
+  createdAt : string
+}
+
+entity "courts" as Courts {
+  * id : string [PK]
+  --
+  name : string
+  sport : string
+  image : string
+}
+
+entity "coaches" as Coaches {
+  * id : string [PK]
+  --
+  name : string
+  sport : string
+  role : string
+  desc : string
+  price : number
+  avatar : string
+}
+
+entity "equipments" as Equipments {
+  * id : string [PK]
+  --
+  sport : string
+  name : string
+  price : number
+  unit : string
+  icon : string
+  image : string
+  desc : string
+}
+
+entity "packages" as Packages {
+  * id : string [PK]
+  --
+  courtName : string
+  name : string
+  duration : number
+  price : number
+  label : string
+}
+
+entity "availability" as Availability {
+  * id : string [PK] (courtId_date)
+  --
+  slots : array
+}
+
+entity "coachAvailability" as CoachAvailability {
+  * id : string [PK] (coachId_date)
+  --
+  slots : array
+}
+
+Users ||--o{ Bookings : "makes"
+Users ||--o{ Payments : "has"
+Bookings ||--|| Payments : "generates"
+Courts ||--o{ Bookings : "booked in"
+Coaches ||--o{ Bookings : "assigned to"
+Packages ||--o{ Bookings : "included in"
+Equipments }o--o{ Bookings : "rented with"
+Courts ||--o{ Availability : "has daily slots"
+Coaches ||--o{ CoachAvailability : "has daily slots"
+
+@enduml
