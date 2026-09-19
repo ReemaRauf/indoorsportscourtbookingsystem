@@ -5,7 +5,7 @@ import { FaLightbulb, FaUserAlt, FaGraduationCap, FaTableTennis } from "react-ic
 import { MdStadium, MdSportsCricket, MdSportsBaseball, MdSportsTennis, MdShield } from "react-icons/md";
 import StripeCheckout from "../components/StripeCheckout";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://indoorsportscourtbookingsystem-khhj.vercel.app";
 const resolveImage = (img) => {
   if (!img) return "";
   if (img.startsWith("http")) return img;

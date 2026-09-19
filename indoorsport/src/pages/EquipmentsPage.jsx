@@ -5,7 +5,7 @@ import { MdSportsCricket } from "react-icons/md";
 import { GiShuttlecock } from "react-icons/gi";
 import { FaTableTennis, FaLightbulb } from "react-icons/fa";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://indoorsportscourtbookingsystem-khhj.vercel.app";
 const resolveImage = (img) => {
   if (!img) return "";
   if (img.startsWith("http")) return img;
