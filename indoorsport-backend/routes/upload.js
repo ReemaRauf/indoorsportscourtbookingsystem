@@ -6,7 +6,11 @@ const fs = require("fs");
 const auth = require("../middleware/auth");
 
 // Ensure uploads directory exists
-const uploadDir = path.join(__dirname, "../uploads");
+// On Vercel, /var/task is read-only so we use /tmp instead
+const uploadDir = process.env.VERCEL
+  ? "/tmp/uploads"
+  : path.join(__dirname, "../uploads");
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
